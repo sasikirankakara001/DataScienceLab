@@ -1,0 +1,40 @@
+#Rescale data(between 0 and 1)
+import pandas
+import scipy
+import numpy
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import Normalizer
+from sklearn.preprocessing import Binarizer
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.csv"
+names = ['preg','plas','pres','skin','test','mass','pedi','age','class']
+dataframe = pandas.read_csv(url,names=names)
+array = dataframe.values
+#Separate array into input and output components
+X = array[:,0:8]
+Y = array[:,8]
+scaler = MinMaxScaler(feature_range=(0,1))
+rescaledX = scaler.fit_transform(X)
+print(rescaledX)
+
+#Summarize transformed data
+numpy.set_printoptions(precision=3)
+print(rescaledX[0:5,:])
+#Standardize Data
+scaler = StandardScaler().fit(X)
+rescaledX = scaler.transform(X)
+numpy.set_printoptions(precision=3)
+print("Standardize Data:")
+print(rescaledX[0:5,:])
+#Normalize Data:
+scaler = Normalizer().fit(X)
+normalizedX = scaler.transform(X)
+numpy.set_printoptions(precision=3)
+print("Normalize Data:")
+print(normalizedX[0:5,:])
+#Binarize Data:
+binarizer = Binarizer(threshold=0.0).fit(X)
+binaryX = binarizer.transform(X)
+numpy.set_printoptions(precision=3)
+print("Binarize Data:")
+print(binaryX[0:5,:])
